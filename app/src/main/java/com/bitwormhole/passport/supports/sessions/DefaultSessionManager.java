@@ -4,6 +4,7 @@ import com.bitwormhole.passport.contexts.IClient;
 import com.bitwormhole.passport.contexts.ISession;
 import com.bitwormhole.passport.services.SessionManager;
 import com.bitwormhole.passport.web.dto.SessionDTO;
+import com.bitwormhole.passport.web.dto.UserDTO;
 
 public class DefaultSessionManager implements SessionManager {
 
@@ -13,10 +14,10 @@ public class DefaultSessionManager implements SessionManager {
     public DefaultSessionManager() {
     }
 
-    @Override
+    //  @Override
     public void setCurrent(ISession s) {
         if (s == null) {
-            s = this.open(new SessionDTO());
+            s = this.open(new UserDTO());
         }
         this.current = s;
     }
@@ -25,16 +26,16 @@ public class DefaultSessionManager implements SessionManager {
     public ISession getCurrent() {
         ISession s = this.current;
         if (s == null) {
-            s = this.open(new SessionDTO());
+            s = this.open(new UserDTO());
             this.current = s;
         }
         return s;
     }
 
     @Override
-    public ISession open(SessionDTO o) {
+    public ISession open(UserDTO o) {
         if (o == null) {
-            o = new SessionDTO();
+            o = new UserDTO();
         }
         return new DefaultSession(client, o);
     }

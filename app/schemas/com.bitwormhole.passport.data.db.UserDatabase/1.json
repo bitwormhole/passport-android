@@ -2,35 +2,65 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "30356705f25af0455433fcd88a5dc1a9",
+    "identityHash": "337833e070b5d1c9c095fec65770f82e",
     "entities": [
       {
-        "tableName": "User",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER NOT NULL, `first_name` TEXT, `last_name` TEXT, PRIMARY KEY(`uid`))",
+        "tableName": "CredentialEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `label` TEXT, `user_name` TEXT, `domain` TEXT, `uuid` TEXT, `created_at` INTEGER NOT NULL, `updated_at` INTEGER NOT NULL, `deleted_at` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
-            "fieldPath": "uid",
-            "columnName": "uid",
+            "fieldPath": "id",
+            "columnName": "id",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "firstName",
-            "columnName": "first_name",
+            "fieldPath": "label",
+            "columnName": "label",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "lastName",
-            "columnName": "last_name",
+            "fieldPath": "userName",
+            "columnName": "user_name",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "domain",
+            "columnName": "domain",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uuid",
+            "columnName": "uuid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updated_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deletedAt",
+            "columnName": "deleted_at",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "uid"
+            "id"
           ]
         },
         "indices": [],
@@ -40,7 +70,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '30356705f25af0455433fcd88a5dc1a9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '337833e070b5d1c9c095fec65770f82e')"
     ]
   }
 }

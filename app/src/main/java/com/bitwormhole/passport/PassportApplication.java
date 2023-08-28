@@ -6,6 +6,7 @@ import android.content.Context;
 import com.bitwormhole.passport.contexts.IClient;
 import com.bitwormhole.passport.contexts.IPassportApplication;
 import com.bitwormhole.passport.contexts.PassportClientBuilder;
+import com.bitwormhole.passport.services.Services;
 
 public class PassportApplication extends Application implements IPassportApplication {
 
@@ -21,11 +22,18 @@ public class PassportApplication extends Application implements IPassportApplica
         return c;
     }
 
+    @Override
+    public Services getServices() {
+        return this.getClient().getServices();
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
     private IClient initClient() {
-        PassportClientBuilder pcb = new PassportClientBuilder();
-        pcb.app = this;
-        pcb.init();
-        pcb.bind();
+        PassportClientBuilder pcb = new PassportClientBuilder(this);
         return pcb.create();
     }
 

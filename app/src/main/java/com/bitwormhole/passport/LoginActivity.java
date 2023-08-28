@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.bitwormhole.passport.contexts.IPassportApplication;
 import com.bitwormhole.passport.contexts.ISession;
+import com.bitwormhole.passport.services.RestClientService;
 import com.bitwormhole.passport.tasks.Promise;
 import com.bitwormhole.passport.utils.BinaryUtils;
 import com.bitwormhole.passport.utils.SecurityUtils;
@@ -16,6 +17,7 @@ import com.bitwormhole.passport.web.RestRequest;
 import com.bitwormhole.passport.web.RestResponse;
 import com.bitwormhole.passport.web.dto.KeyPairDTO;
 import com.bitwormhole.passport.web.dto.SessionDTO;
+import com.bitwormhole.passport.web.dto.UserDTO;
 
 import java.security.KeyPair;
 
@@ -59,7 +61,8 @@ public class LoginActivity extends BaseActivity {
         req.id = "get";
         req.data = HttpEntity.createWithPOJO("a-json-string");
 
-        Promise<RestResponse> p = app.getClient().getRest().Execute(req);
+        RestClientService rest = app.getServices().getRestClients();
+        Promise<RestResponse> p = rest.Execute(req);
         p.onThen((res) -> {
             RestResponse resp = res.getValue();
             Log.i("http ", "msg:" + resp.message);
@@ -69,22 +72,23 @@ public class LoginActivity extends BaseActivity {
 
     private void handleLogin() {
 
-        SessionDTO session1 = new SessionDTO();
-        session1.setDomain("passport.bitwormhole.com");
-        session1.setName(mEditEmail.getText().toString());
+        UserDTO session1 = new UserDTO();
+        session1.domain = ("passport.bitwormhole.com");
+        session1.email = (mEditEmail.getText().toString());
 
         IPassportApplication app = PassportApplication.getInstance(this);
-        ISession session = app.getClient().getSessions().open(session1);
-        KeyPair kp = app.getClient().getKeyPairs().getUserKeyPair(session, true);
-        log("user-key-pair", kp);
+        ISession session = app.getServices().getSessions().open(session1);
+
+        //  KeyPair kp = app.getClient().getKeyPairs().getUserKeyPair(session, true);
+        //  log("user-key-pair", kp);
     }
 
     private void handleListAll() {
         IPassportApplication app = PassportApplication.getInstance(this);
-        KeyPairDTO[] all = app.getClient().getKeyPairs().listKeyPairs();
-        for (KeyPairDTO item : all) {
-            Log.i("key-pair", item.getAlias());
-        }
+        //      KeyPairDTO[] all = app.getServices().getKeyPairs().
+        //    for (KeyPairDTO item : all) {
+        //      Log.i("key-pair", item.getAlias());
+        // }
     }
 
     private void log(String tag, KeyPair kp) {

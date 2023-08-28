@@ -1,8 +1,8 @@
 package com.bitwormhole.passport.contexts;
 
 import com.bitwormhole.passport.services.JWTClientService;
-import com.bitwormhole.passport.services.KeyPairService;
 import com.bitwormhole.passport.services.RestClientService;
+import com.bitwormhole.passport.services.Services;
 import com.bitwormhole.passport.services.SessionManager;
 import com.bitwormhole.passport.services.TaskService;
 
@@ -19,25 +19,6 @@ public class ClientFacade implements IClient {
         return context.app;
     }
 
-    @Override
-    public JWTClientService getJWT() {
-        return this.context.jwt;
-    }
-
-    @Override
-    public KeyPairService getKeyPairs() {
-        return context.keyPairs;
-    }
-
-    @Override
-    public RestClientService getRest() {
-        return this.context.rest;
-    }
-
-    @Override
-    public SessionManager getSessions() {
-        return context.sessions;
-    }
 
     @Override
     public ISession getCurrentSession() {
@@ -45,7 +26,8 @@ public class ClientFacade implements IClient {
     }
 
     @Override
-    public TaskService getTasks() {
-        return context.tasks;
+    public Services getServices() {
+        return context.services;
     }
+
 }

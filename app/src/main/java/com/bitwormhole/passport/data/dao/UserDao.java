@@ -3,26 +3,25 @@ package com.bitwormhole.passport.data.dao;
 
 import androidx.room.*;
 
-import com.bitwormhole.passport.data.entity.User;
+import com.bitwormhole.passport.data.entity.UserEntity;
 
 import java.util.List;
 
 @Dao
 public interface UserDao {
 
-    @Query("SELECT * FROM user")
-    List<User> getAll();
+    @Query("SELECT * FROM UserEntity")
+    List<UserEntity> getAll();
 
-    @Query("SELECT * FROM user WHERE uid IN (:userIds)")
-    List<User> loadAllByIds(int[] userIds);
+    @Query("SELECT * FROM UserEntity WHERE id IN (:userIds)")
+    List<UserEntity> loadAllByIds(int[] userIds);
 
-    @Query("SELECT * FROM user WHERE first_name LIKE :first AND " +
-            "last_name LIKE :last LIMIT 1")
-    User findByName(String first, String last);
+//    @Query("SELECT * FROM user WHERE first_name LIKE :first AND " + "last_name LIKE :last LIMIT 1")
+//    User findByName(String first, String last);
 
     @Insert
-    void insertAll(User... users);
+    void insertAll(UserEntity... users);
 
     @Delete
-    void delete(User user);
+    void delete(UserEntity user);
 }

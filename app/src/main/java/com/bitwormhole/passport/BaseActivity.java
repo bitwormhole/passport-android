@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.bitwormhole.passport.contexts.IPassportApplication;
 import com.bitwormhole.passport.lifecycle.LifeManager;
+import com.bitwormhole.passport.services.TaskService;
 import com.bitwormhole.passport.tasks.Promise;
 
 public class BaseActivity extends Activity {
@@ -31,8 +32,9 @@ public class BaseActivity extends Activity {
         androidHandler = new Handler();
 
         IPassportApplication app = PassportApplication.getInstance(this);
-        app.getClient().getTasks().init(androidHandler);
-        Promise.bind(app.getClient().getTasks());
+        TaskService tasks = app.getClient().getServices().getTasks();
+        tasks.init(androidHandler);
+        Promise.bind(tasks);
 
         return new OnCreateContext(savedInstanceState, persistentState);
     }

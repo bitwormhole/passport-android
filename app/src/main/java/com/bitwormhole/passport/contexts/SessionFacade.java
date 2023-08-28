@@ -1,5 +1,7 @@
 package com.bitwormhole.passport.contexts;
 
+import com.bitwormhole.passport.components.userspace.UserSpace;
+
 public class SessionFacade implements ISession {
 
     private final SessionContext context;
@@ -19,7 +21,12 @@ public class SessionFacade implements ISession {
     }
 
     @Override
-    public String getUserName() {
+    public String getUserEmail () {
+        return null;
+    }
+
+    @Override
+    public UserSpace getUserSpace() {
         return null;
     }
 
