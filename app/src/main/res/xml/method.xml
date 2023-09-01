@@ -1,0 +1,21 @@
+<input-method xmlns:android="http://schemas.android.com/apk/res/android"
+    android:icon="@drawable/ime_icon"
+    android:settingsActivity="com.bitwormhole.passport.MainActivity">
+
+    <subtype
+        android:label="@string/label_subtype_generic"
+        android:imeSubtypeLocale="en_US"
+        android:icon="@drawable/subtype_icon_english_keyboard_ime"
+        android:imeSubtypeMode="keyboard" />
+
+    <subtype
+        android:name="@string/display_name_english_keyboard_ime"
+        android:icon="@drawable/subtype_icon_english_keyboard_ime"
+
+        android:imeSubtypeExtraValue="somePrivateOption=true"
+        android:imeSubtypeMode="keyboard" />
+
+
+    <!--    android:imeSubtypeLanguage="en_US"    -->
+
+</input-method>

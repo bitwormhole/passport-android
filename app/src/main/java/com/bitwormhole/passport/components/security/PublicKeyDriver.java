@@ -6,6 +6,8 @@ public interface PublicKeyDriver extends KeyDriver {
 
     KeyPairLoader getKeyPairLoader();
 
-    KeyPairGenerator getKeyPairGenerator();
+    KeyPairGen getKeyPairGenerator();
+
+    boolean containsAlias(String alias);
 
 }

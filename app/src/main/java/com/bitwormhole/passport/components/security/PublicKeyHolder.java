@@ -10,4 +10,8 @@ public interface PublicKeyHolder {
 
     Encryptor getEncryptor();
 
+    byte[] getFingerprint();
+
+    String getFingerprintString();
+
 }

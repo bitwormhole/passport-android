@@ -1,6 +1,6 @@
 package com.bitwormhole.passport.components.security;
 
-public interface KeyPairGenerator {
+public interface KeyPairGen {
 
     KeyPairHolder generate(String alias);
 
