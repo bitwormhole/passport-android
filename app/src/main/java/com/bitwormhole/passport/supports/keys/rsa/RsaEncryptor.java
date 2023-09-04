@@ -20,8 +20,8 @@ public class RsaEncryptor implements Encryptor {
     public void encrypt(EncryptedDTO o) {
         try {
             Cipher cipher = RsaDriver.getCipher();
-            OAEPParameterSpec spec = new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA1, PSource.PSpecified.DEFAULT);
-            cipher.init(Cipher.ENCRYPT_MODE, this.key.keyPublic, spec);
+            // OAEPParameterSpec spec = new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA1, PSource.PSpecified.DEFAULT);
+            cipher.init(Cipher.ENCRYPT_MODE, this.key.keyPublic);
             o.encrypted = cipher.doFinal(o.plain);
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -18,6 +18,7 @@ import com.bitwormhole.passport.services.SecretKeyService;
 import com.bitwormhole.passport.utils.HashUtils;
 import com.bitwormhole.passport.web.dto.EncryptedDTO;
 import com.bitwormhole.passport.web.dto.PublicKeyDTO;
+import com.bitwormhole.passport.web.dto.SignatureDTO;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +35,7 @@ public class RsaKeyTest {
         PublicKeyService keyService = PassportApplication.getInstance(appContext).getServices().getPublicKeys();
         PublicKeyDriver driver = keyService.findDriver("RSA");
 
-        String alias = "example-668";
+        String alias = "example-669";
         KeyPairHolder kp1 = null;
         if (driver.containsAlias(alias)) {
             kp1 = driver.getKeyPairLoader().load(alias);
@@ -77,7 +78,14 @@ public class RsaKeyTest {
 
         Signer sig = kp1.getSignatureSigner();
         Verifier ver = pub.getSignatureVerifier();
+        SignatureDTO o1 = new SignatureDTO();
+        SignatureDTO o2 = new SignatureDTO();
 
+        o1.data = "RsaKeyTest[84]:trySign".getBytes();
+        sig.sign(o1);
 
+        o2.data = o1.data;
+        o2.signature = o1.signature;
+        ver.verify(o2);
     }
 }

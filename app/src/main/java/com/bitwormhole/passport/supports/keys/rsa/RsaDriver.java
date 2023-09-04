@@ -21,6 +21,7 @@ public class RsaDriver implements KeyDriverRegistry, PublicKeyDriver {
 
 
     public final static String StoreName = "AndroidKeyStore";
+    public final static String SignatureAlgorithm  = "SHA256withRSA";
 
 
     @Override
@@ -56,17 +57,15 @@ public class RsaDriver implements KeyDriverRegistry, PublicKeyDriver {
         }
     }
 
-    public static KeyStore getStore() throws KeyStoreException, CertificateException, IOException, NoSuchAlgorithmException {
+    static KeyStore getStore() throws KeyStoreException, CertificateException, IOException, NoSuchAlgorithmException {
         KeyStore ks = KeyStore.getInstance(StoreName);
         ks.load(null);
         return ks;
     }
 
-    public static Cipher getCipher() throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException {
+    static Cipher getCipher() throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException {
         String trans;
-        trans = "RSA/ECB/OAEPWithSHA-256AndMGF1Padding";
-        // trans = "RSA/None/NoPadding";
-        // trans = "RSA/ECB/OAEPPadding";
+        trans = "RSA/ECB/PKCS1Padding";
         return Cipher.getInstance(trans);
     }
 

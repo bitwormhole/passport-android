@@ -44,7 +44,11 @@ public class RsaKeyGen implements KeyPairGen {
         int purposes = KeyProperties.PURPOSE_SIGN | KeyProperties.PURPOSE_VERIFY | KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT;
         KeyGenParameterSpec.Builder kgpsBuilder = new KeyGenParameterSpec.Builder(alias, purposes);
         kgpsBuilder.setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512);
-        kgpsBuilder.setRandomizedEncryptionRequired(true);
+        kgpsBuilder.setKeySize(1024 * 2);
+        kgpsBuilder.setSignaturePaddings(KeyProperties.SIGNATURE_PADDING_RSA_PKCS1);
+        kgpsBuilder.setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1);
+        // kgpsBuilder.setRandomizedEncryptionRequired(true);
+
 
         kpg = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, RsaDriver.StoreName);
         kpg.initialize(kgpsBuilder.build());
