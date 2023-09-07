@@ -3,7 +3,12 @@ package com.bitwormhole.passport.data.entity;
 import androidx.room.*;
 
 
-@Entity(inheritSuperIndices = true, indices = {@Index(value = {"uri"}, unique = true)})
+@Entity(
+        inheritSuperIndices = true,
+        indices = {
+                @Index(value = {"uri"}, unique = true)
+        }
+)
 public class UserEntity extends BaseEntity {
 
     @PrimaryKey(autoGenerate = true)

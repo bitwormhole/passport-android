@@ -35,9 +35,11 @@ final class ClientComponentsLoaderImpl implements IClientComponentsLoader {
 
     @Override
     public SecretKeyHolder loadSecretKey() {
-        KeyPairHolder kp = context.facade.getKeyPair();
-        NativeSecretKeyLoader loader = new NativeSecretKeyLoader(context);
-        return loader.loadByKeyPair(kp);
+        //     KeyPairHolder kp = context.facade.getKeyPair();
+        //    NativeSecretKeyLoader loader = new NativeSecretKeyLoader(context);
+        //   return loader.loadByKeyPair(kp);
+
+        return null; // no impl
     }
 
     @Override

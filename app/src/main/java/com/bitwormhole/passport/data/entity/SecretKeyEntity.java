@@ -2,16 +2,25 @@ package com.bitwormhole.passport.data.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.bitwormhole.passport.data.dxo.SecretKeyID;
 
 
-@Entity(inheritSuperIndices = true)
+@Entity(
+        inheritSuperIndices = true,
+        indices = {
+                @Index(value = {"selection"}, unique = true)
+        }
+)
 public class SecretKeyEntity extends BaseEntity {
 
     @PrimaryKey(autoGenerate = true)
     public long id;
+
+    @ColumnInfo(name = "selection")
+    public String selection;
 
     @ColumnInfo(name = "public_key_fingerprint")
     public String publicKeyFingerprint;

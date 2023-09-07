@@ -11,9 +11,12 @@ import com.bitwormhole.passport.data.converters.UserSpaceConverter;
 import com.bitwormhole.passport.data.db.RootDatabase;
 import com.bitwormhole.passport.services.DatabaseService;
 import com.bitwormhole.passport.services.JWTClientService;
+import com.bitwormhole.passport.services.LoginService;
+import com.bitwormhole.passport.services.ProfileService;
 import com.bitwormhole.passport.services.PublicKeyService;
 import com.bitwormhole.passport.services.RestClientService;
 import com.bitwormhole.passport.services.SecretKeyService;
+import com.bitwormhole.passport.services.ServerDiscoverService;
 import com.bitwormhole.passport.services.Services;
 import com.bitwormhole.passport.services.SessionManager;
 import com.bitwormhole.passport.services.TaskService;
@@ -62,6 +65,9 @@ public final class ClientContext {
     public DatabaseService databases;
     public UserSpaceService userSpaces;
     public UUIDGenerater uuidGenerater;
+    public LoginService loginService;
+    public ServerDiscoverService serverDiscoverService;
+    public ProfileService profiles;
 
     public ClientContext() {
         List<Object> clist = new ArrayList<>();

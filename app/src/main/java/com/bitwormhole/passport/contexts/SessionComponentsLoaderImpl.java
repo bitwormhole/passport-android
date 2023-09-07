@@ -2,10 +2,12 @@ package com.bitwormhole.passport.contexts;
 
 import com.bitwormhole.passport.components.bo.UserSpaceBO;
 import com.bitwormhole.passport.components.security.KeyPairHolder;
+import com.bitwormhole.passport.components.security.PublicKeyDriver;
 import com.bitwormhole.passport.components.security.SecretKeyHolder;
 import com.bitwormhole.passport.components.userspace.UserSpace;
 import com.bitwormhole.passport.data.db.UserDatabase;
 import com.bitwormhole.passport.services.DatabaseService;
+import com.bitwormhole.passport.services.Services;
 import com.bitwormhole.passport.services.UserSpaceService;
 import com.bitwormhole.passport.web.dto.UserDTO;
 
@@ -21,7 +23,15 @@ public class SessionComponentsLoaderImpl implements ISessionComponentsLoader {
 
     @Override
     public KeyPairHolder loadKeyPair() {
-        return null;
+        String algorithm = "rsa";
+        String alias = context.facade.getUserSpace().keyPairAlias();
+        Services services = context.clientInterface.getServices();
+        PublicKeyDriver driver = services.getPublicKeys().findDriver(algorithm);
+        if (driver.containsAlias(alias)) {
+            return driver.getKeyPairLoader().load(alias);
+        } else {
+            return driver.getKeyPairGenerator().generate(alias);
+        }
     }
 
     @Override

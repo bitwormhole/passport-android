@@ -7,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.bitwormhole.passport.data.entity.SecretKeyEntity;
+import com.bitwormhole.passport.data.entity.UserSpaceEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,9 @@ public interface SecretKeyDao {
 
     @Query("SELECT * FROM SecretKeyEntity WHERE id IN (:id)")
     Optional<SecretKeyEntity> findById(long id);
+
+    @Query("SELECT * FROM SecretKeyEntity WHERE selection = (:selection)")
+    Optional<SecretKeyEntity> findBySelection(String selection);
 
     @Insert
     void insertAll(SecretKeyEntity... items);

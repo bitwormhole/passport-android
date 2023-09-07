@@ -25,7 +25,6 @@ public interface UserDao {
     @Update
     void update(UserEntity user);
 
-
     @Delete
     void delete(UserEntity user);
 }

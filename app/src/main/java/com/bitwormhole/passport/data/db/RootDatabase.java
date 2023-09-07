@@ -13,13 +13,10 @@ import com.bitwormhole.passport.data.entity.UserSpaceEntity;
         version = 3,
         entities = {
                 UserSpaceEntity.class,
-                SecretKeyEntity.class,
         }
 )
 public abstract class RootDatabase extends RoomDatabase {
 
     public abstract UserSpaceDao userSpaceDao();
-
-    public abstract SecretKeyDao secretKeyDao();
 
 }

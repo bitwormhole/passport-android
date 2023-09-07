@@ -35,7 +35,7 @@ public interface UserSpaceDao {
     @Query("SELECT * FROM UserSpaceEntity WHERE id = (:id)")
     Optional<UserSpaceEntity> findById(long id);
 
-    @Query("SELECT * FROM UserSpaceEntity WHERE current = (:current)")
-    Optional<UserSpaceEntity> findByCurrent(long current);
+    @Query("SELECT * FROM UserSpaceEntity WHERE selection = (:selection)")
+    Optional<UserSpaceEntity> findBySelection(String selection);
 
 }

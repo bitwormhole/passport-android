@@ -4,9 +4,12 @@ import com.bitwormhole.passport.contexts.ClientContext;
 import com.bitwormhole.passport.contexts.IComponent;
 import com.bitwormhole.passport.services.DatabaseService;
 import com.bitwormhole.passport.services.JWTClientService;
+import com.bitwormhole.passport.services.LoginService;
+import com.bitwormhole.passport.services.ProfileService;
 import com.bitwormhole.passport.services.PublicKeyService;
 import com.bitwormhole.passport.services.RestClientService;
 import com.bitwormhole.passport.services.SecretKeyService;
+import com.bitwormhole.passport.services.ServerDiscoverService;
 import com.bitwormhole.passport.services.Services;
 import com.bitwormhole.passport.services.SessionManager;
 import com.bitwormhole.passport.services.TaskService;
@@ -31,6 +34,11 @@ public class ServicesImpl implements Services, IComponent {
     }
 
     @Override
+    public LoginService getLoginService() {
+        return context.loginService;
+    }
+
+    @Override
     public PublicKeyService getPublicKeys() {
         return context.publicKeys;
     }
@@ -46,8 +54,18 @@ public class ServicesImpl implements Services, IComponent {
     }
 
     @Override
+    public ProfileService getProfiles() {
+        return context.profiles;
+    }
+
+    @Override
     public SessionManager getSessions() {
         return context.sessions;
+    }
+
+    @Override
+    public ServerDiscoverService getServerDiscoverService() {
+        return context.serverDiscoverService;
     }
 
     @Override

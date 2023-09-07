@@ -1,6 +1,7 @@
 package com.bitwormhole.passport.services;
 
 import com.bitwormhole.passport.components.security.SecretKeyDriver;
+import com.bitwormhole.passport.contexts.ISession;
 import com.bitwormhole.passport.data.IEntityUpdater;
 import com.bitwormhole.passport.data.dxo.SecretKeyID;
 import com.bitwormhole.passport.data.entity.SecretKeyEntity;
@@ -14,15 +15,15 @@ public interface SecretKeyService {
 
     // base
 
-    List<SecretKeyDTO> listAll();
+    List<SecretKeyDTO> listAll(ISession session);
 
-    Optional<SecretKeyDTO> findByID(SecretKeyID id);
+    Optional<SecretKeyDTO> findByID(ISession session, SecretKeyID id);
 
-    SecretKeyDTO insert(SecretKeyDTO item);
+    SecretKeyDTO insert(ISession session, SecretKeyDTO item);
 
-    SecretKeyDTO update(SecretKeyID id, IEntityUpdater<SecretKeyEntity> h);
+    SecretKeyDTO update(ISession session, SecretKeyID id, IEntityUpdater<SecretKeyEntity> h);
 
-    void remove(SecretKeyID id);
+    void remove(ISession session, SecretKeyID id);
 
     // ext
 

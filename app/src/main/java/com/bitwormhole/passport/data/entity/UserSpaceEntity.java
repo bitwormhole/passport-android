@@ -10,7 +10,13 @@ import com.bitwormhole.passport.data.dxo.SecretKeyID;
 import com.bitwormhole.passport.data.dxo.UserSpaceID;
 
 
-@Entity(inheritSuperIndices = true, indices = {@Index(value = {"uri"}, unique = true), @Index(value = {"current"}, unique = true)})
+@Entity(
+        inheritSuperIndices = true,
+        indices = {
+                @Index(value = {"uri"}, unique = true),
+                @Index(value = {"selection"}, unique = true)
+        }
+)
 public class UserSpaceEntity extends BaseEntity {
 
     @PrimaryKey(autoGenerate = true)
@@ -33,8 +39,8 @@ public class UserSpaceEntity extends BaseEntity {
     @ColumnInfo(name = "secret_key_id")
     public long secretKeyID;
 
-    @ColumnInfo(name = "current")
-    public long current;   // current==1 表示是当前的用户空间
+    @ColumnInfo(name = "selection")
+    public String selection;
 
 
     public UserSpaceEntity() {

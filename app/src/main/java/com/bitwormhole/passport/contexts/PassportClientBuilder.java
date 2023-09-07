@@ -13,6 +13,8 @@ import com.bitwormhole.passport.supports.keys.aes.AESDriver;
 import com.bitwormhole.passport.supports.keys.rsa.RsaDriver;
 import com.bitwormhole.passport.supports.rest.DefaultRestClient;
 import com.bitwormhole.passport.supports.sessions.DefaultSessionManager;
+import com.bitwormhole.passport.supports.sessions.LoginServiceImpl;
+import com.bitwormhole.passport.supports.sessions.ServerDiscoverServiceImpl;
 import com.bitwormhole.passport.supports.sessions.UserSpaceServiceImpl;
 import com.bitwormhole.passport.supports.tasks.DefaultTaskService;
 import com.bitwormhole.passport.supports.tokens.DefaultTokenManager;
@@ -40,7 +42,9 @@ public final class PassportClientBuilder {
     UserSpaceServiceImpl userSpaces;
     DatabaseServiceImpl databases;
     UUIDGeneraterImpl uuidGen;
-
+    ProfileServiceImpl profiles;
+    LoginServiceImpl loginService;
+    ServerDiscoverServiceImpl serverDiscoverService;
     ConverterGetter converters;
     SecretKeyConverterImpl secretKeyConverter;
     UserSpaceConverterImpl userSpaceConverter;
@@ -91,6 +95,9 @@ public final class PassportClientBuilder {
         userSpaceConverter = new UserSpaceConverterImpl();
         secretKeyConverter = new SecretKeyConverterImpl();
         uuidGen = new UUIDGeneraterImpl();
+        loginService = new LoginServiceImpl();
+        serverDiscoverService = new ServerDiscoverServiceImpl();
+        profiles = new ProfileServiceImpl();
     }
 
 
@@ -118,6 +125,9 @@ public final class PassportClientBuilder {
         cl.add(cc.secretKeyConverter);
         cl.add(cc.userSpaceConverter);
         cl.add(cc.uuidGenerater);
+        cl.add(cc.serverDiscoverService);
+        cl.add(cc.loginService);
+        cl.add(cc.profiles);
     }
 
 
@@ -142,6 +152,9 @@ public final class PassportClientBuilder {
         cc.secretKeyConverter = this.secretKeyConverter;
         cc.userSpaceConverter = this.userSpaceConverter;
         cc.uuidGenerater = this.uuidGen;
+        cc.serverDiscoverService = this.serverDiscoverService;
+        cc.loginService = this.loginService;
+        cc.profiles = this.profiles;
 
         this.client = cc;
     }

@@ -10,6 +10,7 @@ import com.bitwormhole.passport.data.converters.UserSpaceConverter;
 import com.bitwormhole.passport.data.dao.CRUD;
 import com.bitwormhole.passport.data.dao.UserSpaceDao;
 import com.bitwormhole.passport.data.dxo.LongID;
+import com.bitwormhole.passport.data.dxo.Selections;
 import com.bitwormhole.passport.data.dxo.UserSpaceID;
 import com.bitwormhole.passport.data.entity.UserSpaceEntity;
 import com.bitwormhole.passport.services.UserSpaceService;
@@ -28,9 +29,6 @@ import java.util.Optional;
 public class UserSpaceServiceImpl implements UserSpaceService, IComponent {
 
 
-    private static final long BE_CURRENT = 1;
-
-
     private ClientContext context;
     private UserSpaceConverter userSpaceConverter;
     private UserSpaceManager manager;
@@ -40,8 +38,8 @@ public class UserSpaceServiceImpl implements UserSpaceService, IComponent {
         final UserSpaceDao dao = getUserSpaceDao();
         UserSpaceEntity o2 = this.userSpaceConverter.bo2entity(o1).toOptional().get();
         CRUD.getInstance(context).prepareInsert(o2);
-        if (o2.current == 0) {
-            o2.current = System.currentTimeMillis();
+        if (o2.selection == null) {
+            o2.selection = "sel-" + System.currentTimeMillis();
         }
         o2.id = dao.insertOne(o2);
         return this.userSpaceConverter.entity2bo(o2).toOptional().get();
@@ -111,7 +109,7 @@ public class UserSpaceServiceImpl implements UserSpaceService, IComponent {
         final UserSpaceDao dao = getUserSpaceDao();
         final UserSpaceEntity[] all = dao.listAll();
         for (UserSpaceEntity item : all) {
-            if (item.current == BE_CURRENT) {
+            if (Selections.isCurrent(item.selection)) {
                 return this.userSpaceConverter.entity2bo(item).toOptional();
             }
         }
@@ -127,7 +125,7 @@ public class UserSpaceServiceImpl implements UserSpaceService, IComponent {
         UserSpaceEntity older, newer;
         older = newer = null;
         for (UserSpaceEntity item : all) {
-            if (item.current == BE_CURRENT) {
+            if (Selections.isCurrent(item.selection)) {
                 older = item;
             }
             if (item.id == id) {
@@ -141,10 +139,10 @@ public class UserSpaceServiceImpl implements UserSpaceService, IComponent {
             if (older.id == newer.id) {
                 return;
             }
-            older.current = System.currentTimeMillis();
+            older.selection = "sel-" + System.currentTimeMillis();
             dao.update(older);
         }
-        newer.current = BE_CURRENT;
+        newer.selection = Selections.CURRENT;
         dao.update(newer);
     }
 
