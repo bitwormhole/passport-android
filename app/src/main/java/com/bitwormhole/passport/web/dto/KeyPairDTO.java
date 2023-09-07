@@ -1,6 +1,6 @@
 package com.bitwormhole.passport.web.dto;
 
-public class KeyPairDTO {
+public class KeyPairDTO extends BaseDTO {
 
     private String domain;
     private String username;

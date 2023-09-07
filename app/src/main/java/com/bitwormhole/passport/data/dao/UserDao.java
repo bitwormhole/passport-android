@@ -22,6 +22,10 @@ public interface UserDao {
     @Insert
     void insertAll(UserEntity... users);
 
+    @Update
+    void update(UserEntity user);
+
+
     @Delete
     void delete(UserEntity user);
 }

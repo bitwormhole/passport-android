@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.bitwormhole.passport.components.bo.CryptBO;
 import com.bitwormhole.passport.components.security.SecretKeyDriver;
 import com.bitwormhole.passport.components.security.SecretKeyHolder;
 import com.bitwormhole.passport.services.SecretKeyService;
@@ -28,12 +29,12 @@ public class AesKeyTest {
         SecretKeyDriver driver = keyService.findDriver("aes");
 
 
-        EncryptedDTO o1 = new EncryptedDTO();
+        CryptBO o1 = new CryptBO();
         o1.plain = this.makePlainData((100 * 1024) + 3);
         o1.iv = this.makePlainData(16);
         SecretKeyDTO ko = this.tryEncrypt(driver, o1);
 
-        EncryptedDTO o2 = new EncryptedDTO();
+        CryptBO o2 = new CryptBO();
         o2.iv = o1.iv;
         o2.encrypted = o1.encrypted;
         this.tryDecrypt(driver, ko, o2);
@@ -51,13 +52,13 @@ public class AesKeyTest {
         return b.toByteArray();
     }
 
-    private SecretKeyDTO tryEncrypt(SecretKeyDriver driver, EncryptedDTO o) {
+    private SecretKeyDTO tryEncrypt(SecretKeyDriver driver, CryptBO o) {
         SecretKeyHolder key = driver.getGenerator().generate();
         key.getEncryptor().encrypt(o);
         return key.export();
     }
 
-    private void tryDecrypt(SecretKeyDriver driver, SecretKeyDTO ko, EncryptedDTO o) {
+    private void tryDecrypt(SecretKeyDriver driver, SecretKeyDTO ko, CryptBO o) {
         SecretKeyHolder key = driver.getLoader().load(ko);
         key.getDecrypter().decrypt(o);
     }

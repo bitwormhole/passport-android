@@ -4,10 +4,12 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(inheritSuperIndices = true)
-public class CredentialEntity extends Base {
+import com.bitwormhole.passport.data.dxo.CredentialID;
 
-    @PrimaryKey
+@Entity(inheritSuperIndices = true)
+public class CredentialEntity extends BaseEntity {
+
+    @PrimaryKey(autoGenerate = true)
     public long id;
 
     @ColumnInfo(name = "label")
@@ -18,5 +20,15 @@ public class CredentialEntity extends Base {
 
     @ColumnInfo(name = "domain")
     public String domain;
+
+
+    public CredentialEntity() {
+    }
+
+    public CredentialID getID() {
+        CredentialID dst = new CredentialID();
+        dst.id = this.id;
+        return dst;
+    }
 
 }

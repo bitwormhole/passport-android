@@ -5,6 +5,8 @@ import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.bitwormhole.passport.components.bo.CryptBO;
+import com.bitwormhole.passport.components.bo.SignatureBO;
 import com.bitwormhole.passport.components.security.Decrypter;
 import com.bitwormhole.passport.components.security.Encryptor;
 import com.bitwormhole.passport.components.security.KeyPairHolder;
@@ -46,8 +48,8 @@ public class RsaKeyTest {
         PublicKeyDTO pkdata = kp1.getPublicKey().export();
         PublicKeyHolder pub = driver.getPublicKeyLoader().load(pkdata);
 
-        String fingerprint1 = kp1.getPublicKey().getFingerprintString();
-        String fingerprint2 = pub.getFingerprintString();
+        String fingerprint1 = kp1.getPublicKey().getFingerprint().toString();
+        String fingerprint2 = pub.getFingerprint().toString();
 
         this.tryCrypt(kp1, pub);
         this.trySign(kp1, pub);
@@ -62,11 +64,11 @@ public class RsaKeyTest {
         Decrypter dec = kp1.getDecrypter();
         Encryptor enc = pub.getEncryptor();
 
-        EncryptedDTO pack1 = new EncryptedDTO();
+        CryptBO pack1 = new CryptBO();
         pack1.plain = data1;
         enc.encrypt(pack1);
 
-        EncryptedDTO pack2 = new EncryptedDTO();
+        CryptBO pack2 = new CryptBO();
         pack2.encrypted = pack1.encrypted;
         dec.decrypt(pack2);
         byte[] data2 = pack2.plain;
@@ -78,8 +80,8 @@ public class RsaKeyTest {
 
         Signer sig = kp1.getSignatureSigner();
         Verifier ver = pub.getSignatureVerifier();
-        SignatureDTO o1 = new SignatureDTO();
-        SignatureDTO o2 = new SignatureDTO();
+        SignatureBO o1 = new SignatureBO();
+        SignatureBO o2 = new SignatureBO();
 
         o1.data = "RsaKeyTest[84]:trySign".getBytes();
         sig.sign(o1);

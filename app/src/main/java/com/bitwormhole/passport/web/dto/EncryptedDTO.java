@@ -1,6 +1,6 @@
 package com.bitwormhole.passport.web.dto;
 
-public class EncryptedDTO {
+public class EncryptedDTO extends BaseDTO {
 
     public byte[] plain; // 明文
     public byte[] encrypted; // 密文

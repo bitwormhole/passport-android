@@ -1,5 +1,6 @@
 package com.bitwormhole.passport.supports.keys.rsa;
 
+import com.bitwormhole.passport.components.bo.SignatureBO;
 import com.bitwormhole.passport.components.security.Verifier;
 import com.bitwormhole.passport.web.dto.SignatureDTO;
 
@@ -18,7 +19,7 @@ public class RsaVerifier implements Verifier {
 
 
     @Override
-    public void verify(SignatureDTO o) throws SecurityException {
+    public void verify(SignatureBO o) throws SecurityException {
         o.ok = false;
         try {
             this.doVerify(o);
@@ -31,7 +32,7 @@ public class RsaVerifier implements Verifier {
     }
 
 
-    private void doVerify(SignatureDTO o) throws SignatureException, InvalidKeyException, NoSuchAlgorithmException {
+    private void doVerify(SignatureBO o) throws SignatureException, InvalidKeyException, NoSuchAlgorithmException {
         String algorithm = RsaDriver.SignatureAlgorithm;
         Signature s = Signature.getInstance(algorithm);
         s.initVerify(this.key.keyPublic);

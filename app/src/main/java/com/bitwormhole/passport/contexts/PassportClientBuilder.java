@@ -1,7 +1,11 @@
 package com.bitwormhole.passport.contexts;
 
 import com.bitwormhole.passport.supports.ServicesImpl;
+import com.bitwormhole.passport.supports.converting.ConverterGetter;
+import com.bitwormhole.passport.supports.converting.SecretKeyConverterImpl;
+import com.bitwormhole.passport.supports.converting.UserSpaceConverterImpl;
 import com.bitwormhole.passport.supports.db.DatabaseServiceImpl;
+import com.bitwormhole.passport.supports.db.UUIDGeneraterImpl;
 import com.bitwormhole.passport.supports.keys.KeyDriverManagerImpl;
 import com.bitwormhole.passport.supports.keys.PublicKeyServiceImpl;
 import com.bitwormhole.passport.supports.keys.SecretKeyServiceImpl;
@@ -35,6 +39,11 @@ public final class PassportClientBuilder {
     DefaultTaskService tasks;
     UserSpaceServiceImpl userSpaces;
     DatabaseServiceImpl databases;
+    UUIDGeneraterImpl uuidGen;
+
+    ConverterGetter converters;
+    SecretKeyConverterImpl secretKeyConverter;
+    UserSpaceConverterImpl userSpaceConverter;
 
 
     public PassportClientBuilder(IPassportApplication app) {
@@ -78,6 +87,10 @@ public final class PassportClientBuilder {
         tasks = new DefaultTaskService();
         databases = new DatabaseServiceImpl();
         userSpaces = new UserSpaceServiceImpl();
+        converters = new ConverterGetter();
+        userSpaceConverter = new UserSpaceConverterImpl();
+        secretKeyConverter = new SecretKeyConverterImpl();
+        uuidGen = new UUIDGeneraterImpl();
     }
 
 
@@ -100,6 +113,11 @@ public final class PassportClientBuilder {
         cl.add(cc.tasks);
         cl.add(cc.userSpaces);
         cl.add(cc.databases);
+
+        cl.add(cc.converters);
+        cl.add(cc.secretKeyConverter);
+        cl.add(cc.userSpaceConverter);
+        cl.add(cc.uuidGenerater);
     }
 
 
@@ -120,6 +138,10 @@ public final class PassportClientBuilder {
         cc.tasks = this.tasks;
         cc.userSpaces = this.userSpaces;
         cc.databases = this.databases;
+        cc.converters = this.converters;
+        cc.secretKeyConverter = this.secretKeyConverter;
+        cc.userSpaceConverter = this.userSpaceConverter;
+        cc.uuidGenerater = this.uuidGen;
 
         this.client = cc;
     }

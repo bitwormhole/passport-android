@@ -31,9 +31,12 @@ public class DatabaseServiceImpl implements DatabaseService, IComponent {
     @Override
     public RootDatabase loadRootDB() {
         Context ctx = this.clientContext.context;
-        File dbfile = this.userSpaces.getRoot().getDatabaseFile();
+        File dbfile = this.userSpaces.getManager().getRoot().getDatabaseFile();
         String name = dbfile.getPath();
-        return Room.databaseBuilder(ctx, RootDatabase.class, name).build();
+        return Room.databaseBuilder(ctx, RootDatabase.class, name)
+                //  .addMigrations(RootDatabaseMigrationFactory.getMigrations())
+                .fallbackToDestructiveMigration()
+                .build();
     }
 
     @Override

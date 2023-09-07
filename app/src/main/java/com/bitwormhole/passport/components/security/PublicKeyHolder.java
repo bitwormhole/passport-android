@@ -1,5 +1,6 @@
 package com.bitwormhole.passport.components.security;
 
+import com.bitwormhole.passport.data.dxo.Hex;
 import com.bitwormhole.passport.web.dto.PublicKeyDTO;
 
 public interface PublicKeyHolder {
@@ -10,8 +11,6 @@ public interface PublicKeyHolder {
 
     Encryptor getEncryptor();
 
-    byte[] getFingerprint();
-
-    String getFingerprintString();
+    Hex getFingerprint();
 
 }

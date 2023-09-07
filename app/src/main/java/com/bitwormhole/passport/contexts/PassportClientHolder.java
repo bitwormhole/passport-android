@@ -2,6 +2,8 @@ package com.bitwormhole.passport.contexts;
 
 import android.app.Activity;
 
+import java.util.Optional;
+
 public class PassportClientHolder {
 
     private IClient client;
@@ -19,7 +21,7 @@ public class PassportClientHolder {
         return c;
     }
 
-    public ISession getSession(Activity a) {
+    public Optional<ISession> getSession(Activity a) {
         IClient c = this.getClient(a);
         return c.getCurrentSession();
     }

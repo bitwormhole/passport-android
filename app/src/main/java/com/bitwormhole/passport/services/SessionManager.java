@@ -6,7 +6,7 @@ import com.bitwormhole.passport.web.dto.UserDTO;
 
 public interface SessionManager {
 
-    ISession getCurrent();
+    ISession openCurrent();
 
     ISession open(UserDTO o);
 

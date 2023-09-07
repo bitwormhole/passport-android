@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.bitwormhole.passport.contexts.ISession;
 import com.bitwormhole.passport.contexts.PassportClientHolder;
 
+import java.util.Optional;
+
 public class PasswordDisplayActivity extends Activity {
 
     private final PassportClientHolder clientHolder = new PassportClientHolder();
@@ -31,7 +33,8 @@ public class PasswordDisplayActivity extends Activity {
 
         this.setContentView(R.layout.activity_password_display);
 
-        ISession s = clientHolder.getSession(this);
+        Optional<ISession> opSession = clientHolder.getSession(this);
+        ISession s = opSession.get();
         s.getClient();
 
         mPassword = "(password)";

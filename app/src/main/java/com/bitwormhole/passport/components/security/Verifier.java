@@ -1,9 +1,9 @@
 package com.bitwormhole.passport.components.security;
 
-import com.bitwormhole.passport.web.dto.SignatureDTO;
+import com.bitwormhole.passport.components.bo.SignatureBO;
 
 public interface Verifier {
 
-    void verify(SignatureDTO s) throws SecurityException;
+    void verify(SignatureBO s) throws SecurityException;
 
 }

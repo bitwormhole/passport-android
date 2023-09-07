@@ -14,6 +14,8 @@ public interface Services {
 
     TaskService getTasks();
 
+    UUIDGenerater getUUIDGenerater();
+
     DatabaseService getDatabases();
 
     UserSpaceService getUserSpaces();

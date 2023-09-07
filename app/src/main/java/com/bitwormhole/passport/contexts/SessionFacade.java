@@ -1,6 +1,11 @@
 package com.bitwormhole.passport.contexts;
 
+import com.bitwormhole.passport.components.security.KeyPairHolder;
+import com.bitwormhole.passport.components.security.SecretKeyHolder;
 import com.bitwormhole.passport.components.userspace.UserSpace;
+import com.bitwormhole.passport.data.db.RootDatabase;
+import com.bitwormhole.passport.data.db.UserDatabase;
+import com.bitwormhole.passport.data.dxo.UserSpaceID;
 
 public class SessionFacade implements ISession {
 
@@ -12,22 +17,57 @@ public class SessionFacade implements ISession {
 
     @Override
     public IClient getClient() {
-        return this.context.getParent().facade;
+        return context.clientInterface;
     }
 
     @Override
     public String getUserDomain() {
-        return null;
+        return context.domain;
     }
 
     @Override
-    public String getUserEmail () {
-        return null;
+    public String getUserEmail() {
+        return context.email;
     }
 
     @Override
     public UserSpace getUserSpace() {
-        return null;
+        UserSpace us = context.space;
+        if (us == null) {
+            us = context.loader.loadUserSpace();
+            context.space = us;
+        }
+        return us;
+    }
+
+    @Override
+    public UserDatabase getDatabase() {
+        UserDatabase db = context.database;
+        if (db == null) {
+            db = context.loader.loadDatabase();
+            context.database = db;
+        }
+        return db;
+    }
+
+    @Override
+    public KeyPairHolder getKeyPair() {
+        KeyPairHolder h = context.keyPair;
+        if (h == null) {
+            h = context.loader.loadKeyPair();
+            context.keyPair = h;
+        }
+        return h;
+    }
+
+    @Override
+    public SecretKeyHolder getSecretKey() {
+        SecretKeyHolder h = context.secretKey;
+        if (h == null) {
+            h = context.loader.loadSecretKey();
+            context.secretKey = h;
+        }
+        return h;
     }
 
     @Override
@@ -43,5 +83,12 @@ public class SessionFacade implements ISession {
     @Override
     public void save() {
 
+    }
+
+    @Override
+    public void saveAsCurrent() {
+        UserSpace space = this.getUserSpace();
+        UserSpaceID id = space.id();
+        this.getClient().getServices().getUserSpaces().setCurrent(id);
     }
 }

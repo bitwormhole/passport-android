@@ -2,7 +2,9 @@ package com.bitwormhole.passport.data.entity;
 
 import androidx.room.ColumnInfo;
 
-public class Base {
+import com.bitwormhole.passport.data.dxo.UUID;
+
+public class BaseEntity {
 
     @ColumnInfo(name = "uuid")
     public String uuid;

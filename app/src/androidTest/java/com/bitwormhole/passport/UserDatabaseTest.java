@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.bitwormhole.passport.components.bo.UserSpaceBO;
 import com.bitwormhole.passport.components.userspace.UserSpace;
 import com.bitwormhole.passport.contexts.IPassportApplication;
 import com.bitwormhole.passport.data.db.RootDatabase;
@@ -27,12 +28,12 @@ public class UserDatabaseTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         IPassportApplication pa = PassportApplication.getInstance(appContext);
 
-        UserDTO user = new UserDTO();
+        UserSpaceBO user = new UserSpaceBO();
         user.domain = "passport.example.com";
         user.email = "foo@example.com";
 
         UserSpaceService spaces = pa.getServices().getUserSpaces();
-        UserSpace space = spaces.getSpace(user);
+        UserSpace space = spaces.getManager().getSpace(user).get();
         UserDatabase db = pa.getServices().getDatabases().loadUserDB(space);
 
         db.credentialDao();

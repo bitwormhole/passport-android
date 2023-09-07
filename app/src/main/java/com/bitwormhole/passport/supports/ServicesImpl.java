@@ -10,6 +10,7 @@ import com.bitwormhole.passport.services.SecretKeyService;
 import com.bitwormhole.passport.services.Services;
 import com.bitwormhole.passport.services.SessionManager;
 import com.bitwormhole.passport.services.TaskService;
+import com.bitwormhole.passport.services.UUIDGenerater;
 import com.bitwormhole.passport.services.UserSpaceService;
 
 public class ServicesImpl implements Services, IComponent {
@@ -52,6 +53,11 @@ public class ServicesImpl implements Services, IComponent {
     @Override
     public TaskService getTasks() {
         return context.tasks;
+    }
+
+    @Override
+    public UUIDGenerater getUUIDGenerater() {
+        return context.uuidGenerater;
     }
 
     @Override

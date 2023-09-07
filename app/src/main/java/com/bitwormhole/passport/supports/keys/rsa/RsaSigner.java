@@ -1,5 +1,6 @@
 package com.bitwormhole.passport.supports.keys.rsa;
 
+import com.bitwormhole.passport.components.bo.SignatureBO;
 import com.bitwormhole.passport.components.security.Signer;
 import com.bitwormhole.passport.web.dto.SignatureDTO;
 
@@ -18,7 +19,7 @@ public class RsaSigner implements Signer {
 
 
     @Override
-    public void sign(SignatureDTO s) throws SecurityException {
+    public void sign(SignatureBO s) throws SecurityException {
         try {
             this.doSign(s);
         } catch (Exception e) {
@@ -26,7 +27,7 @@ public class RsaSigner implements Signer {
         }
     }
 
-    private void doSign(SignatureDTO o) throws InvalidKeyException, NoSuchAlgorithmException, SignatureException {
+    private void doSign(SignatureBO o) throws InvalidKeyException, NoSuchAlgorithmException, SignatureException {
         String algorithm = RsaDriver.SignatureAlgorithm;
         Signature s = Signature.getInstance(algorithm);
         s.initSign(this.key.keyPrivate);

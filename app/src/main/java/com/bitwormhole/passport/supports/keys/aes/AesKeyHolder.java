@@ -2,6 +2,7 @@ package com.bitwormhole.passport.supports.keys.aes;
 
 import android.util.Base64;
 
+import com.bitwormhole.passport.components.bo.CryptBO;
 import com.bitwormhole.passport.components.security.Decrypter;
 import com.bitwormhole.passport.components.security.Encryptor;
 import com.bitwormhole.passport.components.security.SecretKeyHolder;
@@ -47,7 +48,7 @@ public class AesKeyHolder implements SecretKeyHolder, Decrypter, Encryptor {
 
 
     @Override
-    public void decrypt(EncryptedDTO o) {
+    public void decrypt(CryptBO o) {
         byte[] iv = o.iv;
         if (iv == null) {
             iv = new byte[16];
@@ -63,7 +64,7 @@ public class AesKeyHolder implements SecretKeyHolder, Decrypter, Encryptor {
     }
 
     @Override
-    public void encrypt(EncryptedDTO o) {
+    public void encrypt(CryptBO o) {
         byte[] iv = o.iv;
         if (iv == null) {
             iv = new byte[16];

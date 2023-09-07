@@ -4,9 +4,9 @@ import androidx.room.*;
 
 
 @Entity(inheritSuperIndices = true, indices = {@Index(value = {"uri"}, unique = true)})
-public class UserEntity extends Base {
+public class UserEntity extends BaseEntity {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public long id;
 
     @ColumnInfo(name = "domain")

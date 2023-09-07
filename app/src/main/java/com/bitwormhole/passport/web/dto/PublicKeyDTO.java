@@ -1,6 +1,6 @@
 package com.bitwormhole.passport.web.dto;
 
-public class PublicKeyDTO {
+public class PublicKeyDTO extends BaseDTO {
 
     public String algorithm;
 

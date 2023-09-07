@@ -1,6 +1,10 @@
 package com.bitwormhole.passport.web.dto;
 
-public class SecretKeyDTO {
+import com.bitwormhole.passport.data.dxo.SecretKeyID;
+
+public class SecretKeyDTO extends BaseDTO {
+
+    public long id;
 
 
     public String algorithm;

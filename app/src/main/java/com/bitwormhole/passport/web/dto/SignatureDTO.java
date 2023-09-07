@@ -2,7 +2,7 @@ package com.bitwormhole.passport.web.dto;
 
 
 // 签名
-public class SignatureDTO {
+public class SignatureDTO extends BaseDTO {
 
     public byte[] data;
     public byte[] signature;
