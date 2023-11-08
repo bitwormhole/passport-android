@@ -2,6 +2,6 @@ package com.bitwormhole.passport.tasks;
 
 public interface CatchHandler<T> {
 
-    Promise<T> handle(Reason r);
+    Promise<T> handle(Throwable reason);
 
 }

@@ -50,6 +50,21 @@ final class UserSpaceManagerImpl implements UserSpaceManager {
     }
 
     @Override
+    public UserSpace openSpace(UserSpaceBO want) {
+        Optional<UserSpace> opt = this.getSpace(want);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        UserSpaceBO have = this.service.insert(want);
+        return this.makeForUser(have);
+    }
+
+    @Override
+    public void setCurrentSpace(UserSpace space) {
+        this.service.setCurrent(space.id());
+    }
+
+    @Override
     public UserSpace initSpace(UserSpaceBO want) {
         UserSpaceBO have = this.service.insert(want);
         return this.makeForUser(have);

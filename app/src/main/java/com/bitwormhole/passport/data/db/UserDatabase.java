@@ -14,7 +14,7 @@ import com.bitwormhole.passport.data.entity.UserEntity;
 
 
 @Database(
-        version = 1,
+        version = 5,
         entities = {
                 CredentialEntity.class,
                 SecretKeyEntity.class,

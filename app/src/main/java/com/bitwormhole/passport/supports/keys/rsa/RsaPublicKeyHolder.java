@@ -24,7 +24,7 @@ public class RsaPublicKeyHolder implements PublicKeyHolder {
         PublicKey src = this.key.keyPublic;
         dst.algorithm = src.getAlgorithm();
         dst.format = src.getFormat();
-        dst.data = src.getEncoded();
+        dst.setKeyData(src.getEncoded());
         return dst;
     }
 

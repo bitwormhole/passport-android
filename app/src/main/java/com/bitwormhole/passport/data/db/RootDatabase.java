@@ -10,7 +10,7 @@ import com.bitwormhole.passport.data.entity.SecretKeyEntity;
 import com.bitwormhole.passport.data.entity.UserSpaceEntity;
 
 @Database(
-        version = 3,
+        version = 5,
         entities = {
                 UserSpaceEntity.class,
         }

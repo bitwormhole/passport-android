@@ -12,65 +12,15 @@ import com.google.zxing.integration.android.IntentResult;
 public class MainActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        this.findViewById(R.id.button_scan).setOnClickListener((e) -> {
-            this.startScanIntent();
-        });
-
-        this.findViewById(R.id.button_open_web).setOnClickListener((e) -> {
-            this.startWebIntent();
-        });
-
-        this.findViewById(R.id.button_login).setOnClickListener((e) -> {
-            this.startActivityWithClass(LoginActivity.class);
-        });
-
-        this.findViewById(R.id.button_verify_nine_dots).setOnClickListener((e) -> {
-            this.startActivityWithClass(VerifyNineDotsActivity.class);
-        });
-
-        this.findViewById(R.id.button_verify_pin_code).setOnClickListener((e) -> {
-            this.startActivityWithClass(VerifyPinCodeActivity.class);
-        });
-
-        this.findViewById(R.id.button_password_display).setOnClickListener((e) -> {
-            this.startActivityWithClass(PasswordDisplayActivity.class);
-        });
-
-        this.findViewById(R.id.button_scan_qrcode).setOnClickListener((e) -> {
-            this.startActivityWithClass(ScanQRCodeActivity.class);
-        });
-
+        this.setContentView(R.layout.activity_main);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if (scanResult != null) {
-            // handle scan result
-        }
-        // else continue with any other code you need in the method
-    }
-
-    private void startScanIntent() {
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.initiateScan();
-    }
-
-    private void startWebIntent() {
-        Intent i = new Intent();
-        i.setAction(Intent.ACTION_VIEW);
-        i.setData(Uri.parse("https://im.qq.com/"));
+    protected void onStart() {
+        super.onStart();
+        Intent i = new Intent(this, StartingActivity.class);
         this.startActivity(i);
     }
-
-    private void startActivityWithClass(Class<?> c) {
-        Intent i = new Intent(this, c);
-        this.startActivity(i);
-    }
-
 }

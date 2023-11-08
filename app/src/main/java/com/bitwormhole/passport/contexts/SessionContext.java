@@ -5,6 +5,8 @@ import com.bitwormhole.passport.components.security.SecretKeyHolder;
 import com.bitwormhole.passport.components.userspace.UserSpace;
 import com.bitwormhole.passport.data.db.RootDatabase;
 import com.bitwormhole.passport.data.db.UserDatabase;
+import com.bitwormhole.passport.utils.Attributes;
+import com.bitwormhole.passport.web.RestClient;
 
 public class SessionContext {
 
@@ -15,12 +17,15 @@ public class SessionContext {
 
     public String domain;
     public String email;
+    public boolean exists;
+    public boolean enabled;
 
     public UserDatabase database;
     public KeyPairHolder keyPair;
     public SecretKeyHolder secretKey;
     public UserSpace space;
-
+    public Attributes attributes;
+    public RestClient rest;
 
     public SessionContext(ClientContext parent) {
         this.facade = new SessionFacade(this);

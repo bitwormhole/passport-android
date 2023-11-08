@@ -2,31 +2,30 @@ package com.bitwormhole.passport.tasks;
 
 public class PromiseEvent<T> {
 
-    public final Reason error;
+    public final Throwable error;
 
-    public final Result<T> result;
+    public final T result;
+    public final Class<T> type;
 
-    // public Promise<T> source;
-    // public PromiseEvent() {  }
 
-    public PromiseEvent(Exception exp) {
-        this.error = new Reason(exp);
+    public PromiseEvent(Throwable exp) {
+        this.error = exp;
         this.result = null;
+        this.type = null;
     }
 
-    public PromiseEvent(T data) {
-        this.result = new Result<>(data);
+    public PromiseEvent(Class<T> t, T data) {
+        this.result = data;
         this.error = null;
+        this.type = t;
     }
 
-    public PromiseEvent(Result<T> r) {
-        this.result = r;
-        this.error = null;
+    public boolean isError() {
+        return this.error != null;
     }
 
-    public PromiseEvent(Reason r) {
-        this.error = r;
-        this.result = null;
+    public boolean isResult() {
+        return this.type != null;
     }
 
 }

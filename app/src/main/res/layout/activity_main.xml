@@ -7,46 +7,22 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/button_scan"
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Scan" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    <Button
-        android:id="@+id/button_open_web"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Open Web" />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Passport ... main" />
 
-    <Button
-        android:id="@+id/button_login"
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Login" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    <Button
-        android:id="@+id/button_verify_pin_code"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Verify Pin Code" />
-
-    <Button
-        android:id="@+id/button_verify_nine_dots"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Verify 9 dots" />
-
-    <Button
-        android:id="@+id/button_password_display"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Password Display" />
-
-    <Button
-        android:id="@+id/button_scan_qrcode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Scan QR Code" />
 
 </LinearLayout>

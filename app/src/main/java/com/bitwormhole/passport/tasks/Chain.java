@@ -12,6 +12,8 @@ public interface Chain<T> {
 
     void dispatch(PromiseEvent evt);
 
-    PromiseEvent getCurrentEvent();
+    void dispatchError(Throwable err);
+
+    void dispatchResult(Class<T> t, T result);
 
 }

@@ -24,7 +24,7 @@ public class SessionComponentsLoaderImpl implements ISessionComponentsLoader {
     @Override
     public KeyPairHolder loadKeyPair() {
         String algorithm = "rsa";
-        String alias = context.facade.getUserSpace().keyPairAlias();
+        String alias = context.facade.getUserSpace().get().keyPairAlias();
         Services services = context.clientInterface.getServices();
         PublicKeyDriver driver = services.getPublicKeys().findDriver(algorithm);
         if (driver.containsAlias(alias)) {
@@ -40,19 +40,18 @@ public class SessionComponentsLoaderImpl implements ISessionComponentsLoader {
     }
 
     @Override
-    public UserSpace loadUserSpace() {
+    public Optional<UserSpace> loadUserSpace() {
         UserSpaceService ser = context.clientInterface.getServices().getUserSpaces();
         UserSpaceBO o = new UserSpaceBO();
         o.domain = context.domain;
         o.email = context.email;
-        Optional<UserSpace> result = ser.getManager().getSpace(o);
-        return result.get();
+        return ser.getManager().getSpace(o);
     }
 
     @Override
     public UserDatabase loadDatabase() {
         DatabaseService ser = context.clientInterface.getServices().getDatabases();
-        UserSpace space = context.facade.getUserSpace();
+        UserSpace space = context.facade.getUserSpace().get();
         return ser.loadUserDB(space);
     }
 }

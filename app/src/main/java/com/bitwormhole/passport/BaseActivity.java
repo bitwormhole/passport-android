@@ -2,20 +2,15 @@ package com.bitwormhole.passport;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.PersistableBundle;
 
 import androidx.annotation.Nullable;
 
-import com.bitwormhole.passport.contexts.IPassportApplication;
 import com.bitwormhole.passport.lifecycle.LifeManager;
-import com.bitwormhole.passport.services.TaskService;
-import com.bitwormhole.passport.tasks.Promise;
 
 public class BaseActivity extends Activity {
 
     private final LifeManager lifeManager = new LifeManager();
-    private Handler androidHandler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,14 +23,7 @@ public class BaseActivity extends Activity {
     }
 
     protected final OnCreateContext onCreateBegin(Bundle savedInstanceState, PersistableBundle persistentState) {
-
-        androidHandler = new Handler();
-
-        IPassportApplication app = PassportApplication.getInstance(this);
-        TaskService tasks = app.getClient().getServices().getTasks();
-        tasks.init(androidHandler);
-        Promise.bind(tasks);
-
+        //  IPassportApplication app = PassportApplication.getInstance(this);
         return new OnCreateContext(savedInstanceState, persistentState);
     }
 

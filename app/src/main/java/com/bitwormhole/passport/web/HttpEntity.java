@@ -1,5 +1,6 @@
 package com.bitwormhole.passport.web;
 
+
 import com.google.gson.Gson;
 
 import java.nio.charset.Charset;
@@ -60,10 +61,14 @@ public final class HttpEntity {
         return new String(data, charset);
     }
 
-    public <T> T getPOJO(Class<T> t) {
-        Gson gs = new Gson();
-        String str = new String(data, charset);
-        return gs.fromJson(str, t);
+    public <T> T bindJSON(Class<T> t) {
+        String ctype = "" + this.type;
+        if (ctype.toLowerCase().contains("json")) {
+            Gson gs = new Gson();
+            String str = new String(data, charset);
+            return gs.fromJson(str, t);
+        }
+        throw new NumberFormatException("want JSON, have content-type:" + ctype);
     }
 
 }

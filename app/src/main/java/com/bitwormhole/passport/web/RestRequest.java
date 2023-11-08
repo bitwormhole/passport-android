@@ -5,6 +5,8 @@ import java.util.Map;
 
 public class RestRequest {
 
+    public RestContext context;
+
     public String method;
 
     public String url;

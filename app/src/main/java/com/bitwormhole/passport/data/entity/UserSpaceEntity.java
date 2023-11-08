@@ -42,6 +42,8 @@ public class UserSpaceEntity extends BaseEntity {
     @ColumnInfo(name = "selection")
     public String selection;
 
+    @ColumnInfo(name = "enabled")
+    public boolean enabled;
 
     public UserSpaceEntity() {
     }

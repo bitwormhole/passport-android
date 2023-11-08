@@ -12,7 +12,10 @@ public interface UserSpaceManager {
 
     Optional<UserSpace> getCurrent();
 
-
     Optional<UserSpace> getSpace(UserSpaceBO want);
+
+    UserSpace openSpace(UserSpaceBO want);
+
+    void setCurrentSpace(UserSpace space);
 
 }

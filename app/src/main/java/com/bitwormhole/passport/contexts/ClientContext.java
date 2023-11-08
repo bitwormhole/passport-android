@@ -19,7 +19,6 @@ import com.bitwormhole.passport.services.SecretKeyService;
 import com.bitwormhole.passport.services.ServerDiscoverService;
 import com.bitwormhole.passport.services.Services;
 import com.bitwormhole.passport.services.SessionManager;
-import com.bitwormhole.passport.services.TaskService;
 import com.bitwormhole.passport.services.UUIDGenerater;
 import com.bitwormhole.passport.services.UserSpaceService;
 
@@ -42,6 +41,7 @@ public final class ClientContext {
     public RootDatabase database;
 
     public ISession currentSession;
+    public LoginContext loginContext;
 
 
     // converters
@@ -58,7 +58,7 @@ public final class ClientContext {
     public RestClientService rest;
     public JWTClientService jwt;
     public IPassportApplication app;
-    public TaskService tasks;
+
     public PublicKeyService publicKeys;
     public SecretKeyService secretKeys;
     public KeyDriverManager keyDrivers;

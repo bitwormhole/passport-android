@@ -6,11 +6,7 @@ import com.bitwormhole.passport.components.security.SecretKeyHolder;
 import com.bitwormhole.passport.components.userspace.UserSpace;
 import com.bitwormhole.passport.data.converters.Converters;
 import com.bitwormhole.passport.data.db.RootDatabase;
-import com.bitwormhole.passport.services.JWTClientService;
-import com.bitwormhole.passport.services.RestClientService;
 import com.bitwormhole.passport.services.Services;
-import com.bitwormhole.passport.services.SessionManager;
-import com.bitwormhole.passport.services.TaskService;
 import com.bitwormhole.passport.services.UserSpaceService;
 
 import java.util.Optional;
@@ -96,4 +92,13 @@ public class ClientFacade implements IClient {
         return h;
     }
 
+    @Override
+    public LoginContext getLoginContext(boolean reset) {
+        LoginContext lc = this.context.loginContext;
+        if (reset || lc == null) {
+            lc = new LoginContext();
+            this.context.loginContext = lc;
+        }
+        return lc;
+    }
 }

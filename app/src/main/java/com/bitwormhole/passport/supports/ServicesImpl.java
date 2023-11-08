@@ -12,7 +12,6 @@ import com.bitwormhole.passport.services.SecretKeyService;
 import com.bitwormhole.passport.services.ServerDiscoverService;
 import com.bitwormhole.passport.services.Services;
 import com.bitwormhole.passport.services.SessionManager;
-import com.bitwormhole.passport.services.TaskService;
 import com.bitwormhole.passport.services.UUIDGenerater;
 import com.bitwormhole.passport.services.UserSpaceService;
 
@@ -66,11 +65,6 @@ public class ServicesImpl implements Services, IComponent {
     @Override
     public ServerDiscoverService getServerDiscoverService() {
         return context.serverDiscoverService;
-    }
-
-    @Override
-    public TaskService getTasks() {
-        return context.tasks;
     }
 
     @Override

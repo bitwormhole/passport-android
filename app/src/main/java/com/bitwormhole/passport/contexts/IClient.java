@@ -28,4 +28,6 @@ public interface IClient {
 
     SecretKeyHolder getSecretKey();
 
+    LoginContext getLoginContext(boolean reset);
+
 }

@@ -2,9 +2,11 @@ package com.bitwormhole.passport.tasks;
 
 public class Result<T> {
 
-    private T value;
+    private final T value;
+    private final Class<T> valueType;
 
-    public Result(T d) {
+    public Result(Class<T> t, T d) {
+        this.valueType = t;
         this.value = d;
     }
 
@@ -12,4 +14,7 @@ public class Result<T> {
         return value;
     }
 
+    public Class<T> getType() {
+        return valueType;
+    }
 }

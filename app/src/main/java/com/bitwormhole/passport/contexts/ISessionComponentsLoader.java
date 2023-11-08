@@ -5,13 +5,15 @@ import com.bitwormhole.passport.components.security.SecretKeyHolder;
 import com.bitwormhole.passport.components.userspace.UserSpace;
 import com.bitwormhole.passport.data.db.UserDatabase;
 
+import java.util.Optional;
+
 public interface ISessionComponentsLoader {
 
     KeyPairHolder loadKeyPair();
 
     SecretKeyHolder loadSecretKey();
 
-    UserSpace loadUserSpace();
+    Optional<UserSpace> loadUserSpace();
 
     UserDatabase loadDatabase();
 }

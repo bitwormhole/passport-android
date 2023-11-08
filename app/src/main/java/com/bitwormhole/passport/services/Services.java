@@ -18,8 +18,6 @@ public interface Services {
 
     ServerDiscoverService getServerDiscoverService();
 
-    TaskService getTasks();
-
     UUIDGenerater getUUIDGenerater();
 
     DatabaseService getDatabases();

@@ -19,7 +19,7 @@ public class RsaPublicKeyLoader implements PublicKeyLoader {
         rk.cert = null;
         rk.keyPrivate = null;
         try {
-            rk.keyPublic = this.loadPublicKey(data.data);
+            rk.keyPublic = this.loadPublicKey(data.getKeyData());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

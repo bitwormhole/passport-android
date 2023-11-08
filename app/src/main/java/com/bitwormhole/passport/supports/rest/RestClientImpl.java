@@ -1,11 +1,14 @@
 package com.bitwormhole.passport.supports.rest;
 
-import com.bitwormhole.passport.services.RestClientService;
+import android.util.Log;
+
 import com.bitwormhole.passport.tasks.Promise;
 import com.bitwormhole.passport.tasks.Result;
+import com.bitwormhole.passport.tasks.TaskContext;
 import com.bitwormhole.passport.utils.IOUtils;
 import com.bitwormhole.passport.web.HttpEntity;
 import com.bitwormhole.passport.web.HttpHeaders;
+import com.bitwormhole.passport.web.HttpStatus;
 import com.bitwormhole.passport.web.RestClient;
 import com.bitwormhole.passport.web.RestContext;
 import com.bitwormhole.passport.web.RestRequest;
@@ -18,42 +21,121 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-final class DefaultRestClient implements RestClient {
+final class RestClientImpl implements RestClient {
 
+    private RestContext context;
 
-    public DefaultRestClient() {
+    public RestClientImpl() {
+        context = new RestContext();
     }
 
     @Override
     public void setContext(RestContext ctx) {
+        if (ctx == null) {
+            return;
+        }
+        context = new RestContext(ctx);
+    }
 
+    @Override
+    public RestContext getContext() {
+        return new RestContext(context);
     }
 
     @Override
     public RestResponse Do(RestRequest request) throws IOException {
+        if (request.context == null) {
+            request.context = context;
+        }
         URL url = this.makeURL(request);
+        request.url = url.toString();
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         try {
             this.prepareRequest(conn, request);
-            return this.handleResponse(conn);
+            String method = conn.getRequestMethod();
+            Log.d("REST", "HTTP " + method + " " + url);
+            RestResponse resp = this.handleResponse(conn, request);
+            if (!this.isHttpOK(resp)) {
+                throw new RESTException(resp);
+            }
+            this.handleSetJWT(resp);
+            return resp;
         } finally {
             conn.disconnect();
         }
+    }
+
+
+    private boolean isHttpOK(RestResponse resp) {
+        int code = resp.status;
+        return code == HttpStatus.OK;
+    }
+
+    private void handleSetJWT(RestResponse resp) {
+        RestContext ctx = this.context;
+        String jwt = resp.headers.get("x-set-jwt");
+        if (jwt == null || ctx == null) {
+            return;
+        }
+        ctx.jwt = jwt;
     }
 
     private URL makeURL(RestRequest request) throws MalformedURLException {
         StringBuilder builder = new StringBuilder();
         this.makeURLWithoutQuery(request, builder);
         this.makeQueryForURL(request, builder);
-        return new URL(builder.toString());
+        URL url = new URL(builder.toString());
+        return this.normalize(url);
     }
+
+    private URL normalize(URL url) throws MalformedURLException {
+
+        String protocol = url.getProtocol();
+        String host = url.getHost();
+        int port = url.getPort();
+        String path = url.getPath();
+        String query = url.getQuery();
+
+        path = normalizePath(path);
+
+        StringBuilder b = new StringBuilder();
+        b.append(protocol).append(":");
+        b.append("//").append(host);
+        if (port > 0) {
+            b.append(":").append(port);
+        }
+        b.append("").append(path);
+        if (query != null) {
+            b.append("?").append(query);
+        }
+        return new URL(b.toString());
+    }
+
+    private String normalizePath(String path) {
+        if (path == null) {
+            return "/";
+        }
+        StringBuilder b = new StringBuilder();
+        String[] parts = path.split("/");
+        for (String part : parts) {
+            part = part.trim();
+            if (part.length() == 0) {
+                continue;
+            }
+            b.append("/").append(part);
+        }
+        if (b.length() == 0) {
+            return "/";
+        }
+        return b.toString();
+    }
+
 
     private void makeURLWithoutQuery(RestRequest request, StringBuilder b) {
 
@@ -69,7 +151,7 @@ final class DefaultRestClient implements RestClient {
             return;
         }
 
-        b.append(this.getBaseURL());
+        b.append(this.getBaseURL(request.context));
 
         // use: path
         if (path != null) {
@@ -112,9 +194,10 @@ final class DefaultRestClient implements RestClient {
         }
     }
 
-    private String getBaseURL() {
+    private String getBaseURL(RestContext ctx) {
         // todo
-        return "https://release.bitwormhole.com";
+        // return "https://release.bitwormhole.com";
+        return ctx.baseURL;
     }
 
     private String getDefaultApiPath() {
@@ -123,10 +206,24 @@ final class DefaultRestClient implements RestClient {
     }
 
     private void prepareRequest(HttpURLConnection conn, RestRequest request) throws IOException {
+        prepareRequestJWT(conn, request);
         prepareRequestMethod(conn, request);
         prepareRequestHeaders(conn, request);
         prepareRequestBody(conn, request);
     }
+
+    private void prepareRequestJWT(HttpURLConnection conn, RestRequest request) throws ProtocolException {
+        RestContext ctx = this.context;
+        if (ctx == null) {
+            return;
+        }
+        String jwt = ctx.jwt;
+        if (jwt == null) {
+            return;
+        }
+        request.headers.put("x-jwt", jwt);
+    }
+
 
     private void prepareRequestMethod(HttpURLConnection conn, RestRequest request) throws ProtocolException {
         String method = request.method;
@@ -188,12 +285,13 @@ final class DefaultRestClient implements RestClient {
     }
 
 
-    private RestResponse handleResponse(HttpURLConnection conn) throws IOException {
+    private RestResponse handleResponse(HttpURLConnection conn, RestRequest req) throws IOException {
         RestResponse resp = new RestResponse();
         int code = conn.getResponseCode();
         String msg = conn.getResponseMessage();
         resp.status = code;
         resp.message = msg;
+        resp.request = req;
         this.handleResponseHeaders(conn, resp);
         if (code == HTTP.STATUS_OK) {
             resp.data = this.readResponseStream(conn.getInputStream(), resp);
@@ -235,11 +333,11 @@ final class DefaultRestClient implements RestClient {
 
 
     @Override
-    public Promise Execute(RestRequest req) {
-        final DefaultRestClient self = this;
-        return Promise.execute(() -> {
+    public Promise Execute(TaskContext tc, RestRequest req) {
+        final RestClientImpl self = this;
+        return Promise.execute(tc, RestResponse.class, () -> {
             RestResponse resp = self.Do(req);
-            return new Result(resp);
+            return resp;
         });
     }
 }

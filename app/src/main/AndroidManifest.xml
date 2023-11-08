@@ -34,12 +34,23 @@
             android:name=".VerifyNineDotsActivity"
             android:exported="false"
             android:label="@string/title_activity_verify_nine_dots" />
+
         <activity
-            android:name=".LoginActivity"
+            android:name=".LoginStep1Activity"
             android:exported="false" />
+        <activity
+            android:name=".LoginStep2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginStep3Activity"
+            android:exported="false" />
+
         <activity
             android:name=".ScanQRCodeActivity"
             android:exported="false" />
+
+        <activity android:name=".DebugConsoleActivity" />
+        <activity android:name=".StartingActivity" />
 
         <activity
             android:name=".MainActivity"
