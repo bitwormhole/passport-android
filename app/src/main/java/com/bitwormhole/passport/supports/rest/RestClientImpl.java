@@ -6,6 +6,8 @@ import com.bitwormhole.passport.tasks.Result;
 import com.bitwormhole.passport.utils.IOUtils;
 import com.bitwormhole.passport.web.HttpEntity;
 import com.bitwormhole.passport.web.HttpHeaders;
+import com.bitwormhole.passport.web.RestClient;
+import com.bitwormhole.passport.web.RestContext;
 import com.bitwormhole.passport.web.RestRequest;
 import com.bitwormhole.passport.web.RestResponse;
 
@@ -23,7 +25,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class DefaultRestClient implements RestClientService {
+final class DefaultRestClient implements RestClient {
+
+
+    public DefaultRestClient() {
+    }
+
+    @Override
+    public void setContext(RestContext ctx) {
+
+    }
 
     @Override
     public RestResponse Do(RestRequest request) throws IOException {
